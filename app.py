@@ -5,10 +5,11 @@ from gidgethub import routing
 from gidgethub import aiohttp as gh_aiohttp
 from gidgethub import sansio
 
-GH_SECRET = "<ENTER YOUR SECRET>"
-GH_AUTH = "<ENTER YOUR AUTH TOKEN>"
-GH_USERNAME = "<ENTER YOUR USERNAME>"
-
+GH_SECRET = os.environ.get("GH_SECRET")
+GH_AUTH = os.environ.get("GH_AUTH")
+GH_USERNAME = os.environ.get("GH_USERNAME")
+PORT = 8080
+print(GH_SECRET)
 model = joblib.load('model1.sav')
 routes = web.RouteTableDef()
 router = routing.Router()
@@ -49,7 +50,7 @@ async def main(request):
 if __name__ == "__main__":
     app = web.Application()
     app.add_routes(routes)
-    port = os.environ.get("PORT")
+    port = PORT
     if port is not None:
         port = int(port)
     web.run_app(app, port=port)
